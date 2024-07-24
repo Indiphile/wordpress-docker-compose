@@ -1,7 +1,7 @@
 version: "3"
 services:
   wp:
-    image: wordpress:latest
+    image: indiphile/desa-wordpress:latest
     restart: unless-stopped
     ports:
       - 5010:80
@@ -16,7 +16,7 @@ services:
     depends_on:
       - wp-db
   wp-db:
-    image: mysql:latest
+    image: indiphile/desa-mysql:latest
     volumes:
       - ./db_data:/var/lib/mysql
     restart: unless-stopped
@@ -26,7 +26,7 @@ services:
       MYSQL_USER: "${DB_USER}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
   pma:
-    image: phpmyadmin:latest
+    image: indiphile/desa-phpmyadmin:latest
     ports:
       - 5011:80
     volumes:
@@ -42,7 +42,7 @@ services:
     depends_on:
       - wp-db
   wp-db-backup:
-    container_name: wp-db-backup
+    container_name: indiphile/desa-db-backup:latest
     image: tiredofit/db-backup
     volumes:
       - ./backups:/backup
